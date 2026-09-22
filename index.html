@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07111F">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PMV OS — Command Center</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   color-scheme: dark only;
@@ -19,7 +19,7 @@
   --j1:#E8921A; --j2:#A855F7; --j3:#22B89E;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans-serif;min-height:100vh;overflow-x:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+body{background:var(--navy);color:var(--white);font-family:'Sarabun',sans-serif;min-height:100vh;overflow-x:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
 
 /* ── LAYOUT ── */
 .app{display:grid;grid-template-columns:240px 1fr;min-height:100vh;}
@@ -161,7 +161,7 @@ body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans
 .ta-btn.tl:hover{border-color:var(--teal2);color:var(--teal2);}
 
 .add-task-row{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);}
-.add-task-input{flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:6px;padding:6px 10px;color:var(--white);font-size:11px;font-family:'Noto Sans Thai',sans-serif;outline:none;}
+.add-task-input{flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:6px;padding:6px 10px;color:var(--white);font-size:11px;font-family:'Sarabun',sans-serif;outline:none;}
 .add-task-input:focus{border-color:var(--gold);}
 .add-task-input::placeholder{color:var(--gray);}
 .add-task-btn{background:var(--gold);border:none;border-radius:6px;color:var(--navy);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:6px 12px;cursor:pointer;text-transform:uppercase;}
@@ -248,7 +248,7 @@ body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans
 .hitl-warn{background:rgba(232,146,26,.1);border:1px solid rgba(232,146,26,.3);border-radius:7px;padding:8px 10px;font-size:10px;color:var(--amber);margin-bottom:12px;display:none;}
 .hitl-warn.show{display:block;}
 .hitl-note-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:5px;display:block;}
-.hitl-note{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:7px;padding:8px 10px;color:var(--white);font-size:11px;font-family:'Noto Sans Thai',sans-serif;outline:none;resize:none;}
+.hitl-note{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:7px;padding:8px 10px;color:var(--white);font-size:11px;font-family:'Sarabun',sans-serif;outline:none;resize:none;}
 .hitl-note:focus{border-color:var(--gold);}
 .hitl-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px;}
 .hitl-btn{padding:9px 0;border-radius:8px;border:1px solid;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-weight:700;}
@@ -267,7 +267,7 @@ body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans
 .modal-title{font-family:'Bebas Neue',sans-serif;font-size:20px;margin-bottom:16px;letter-spacing:1px;}
 .form-group{margin-bottom:12px;}
 .form-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:5px;display:block;}
-.form-input,.form-select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;padding:8px 12px;color:var(--white);font-size:12px;font-family:'Noto Sans Thai',sans-serif;outline:none;}
+.form-input,.form-select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;padding:8px 12px;color:var(--white);font-size:12px;font-family:'Sarabun',sans-serif;outline:none;}
 .form-input:focus,.form-select:focus{border-color:var(--gold);}
 .form-select option{background:var(--card2);}
 .modal-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:16px;}
@@ -315,7 +315,7 @@ body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans
 
 .gen-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
 .gen-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;}
-.gen-select,.gen-input{background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;padding:8px 12px;color:var(--white);font-size:12px;font-family:'Noto Sans Thai',sans-serif;outline:none;width:100%;}
+.gen-select,.gen-input{background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:7px;padding:8px 12px;color:var(--white);font-size:12px;font-family:'Sarabun',sans-serif;outline:none;width:100%;}
 .gen-select:focus,.gen-input:focus{border-color:var(--gold);}
 .gen-select option{background:var(--card2);}
 .platform-checks{display:flex;gap:8px;flex-wrap:wrap;}
@@ -498,7 +498,7 @@ body{background:var(--navy);color:var(--white);font-family:'Noto Sans Thai',sans
   padding: 10px 12px;
   color: var(--white);
   font-size: 12px;
-  font-family: 'Noto Sans Thai', sans-serif;
+  font-family: 'Sarabun', sans-serif;
   outline: none;
   transition: border-color .2s;
 }
