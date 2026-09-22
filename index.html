@@ -1875,7 +1875,7 @@ async function generateStory() {
   try {
     const t0 = Date.now();
     const response = await pmvClaudeFetch({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 1000,
       system: buildSystemPrompt(),
       messages: [{ role: 'user', content: userPrompt }]
@@ -2415,7 +2415,7 @@ async function seGenerateStory() {
   try {
     const t0 = Date.now();
     const response = await pmvClaudeFetch({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 3600,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
@@ -4224,7 +4224,7 @@ async function seGenerateImage() {
 
   try {
     const r = await pmvClaudeFetch({
-      model:'claude-sonnet-4-6', max_tokens:1000,
+      model:'claude-sonnet-4-5-20250929', max_tokens:1000,
       system: buildSystemPrompt(),
       messages:[{role:'user', content:`สร้าง Midjourney/Civitai image prompt สำหรับ PMV Universe
 ตัวละคร: ${char}
@@ -4577,7 +4577,7 @@ async function cpeBreakdown() {
   try {
     var promptObj = cpeBuildBreakdownPrompt(story);
     var response = await pmvClaudeFetch({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 4096,
       system: promptObj.system,
       messages: [{ role: 'user', content: promptObj.user }]
