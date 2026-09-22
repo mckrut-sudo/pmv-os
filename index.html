@@ -1987,6 +1987,30 @@ function buildUserPrompt(type, theme) {
   };
   var insDesc = insData[insType] || insType;
 
+  // ── static_image: คนละเส้นทางจริงจาก short_video ──
+  // Keyword → 1 ภาพนิ่งที่สื่อธีมตรงๆ ไม่ต้องเขียนเรื่องยาวก่อน
+  // ประหยัด token มาก (max_tokens 500 พอ เทียบกับ 2000 ของ short_video)
+  // และภาพที่ได้โฟกัสชัด เพราะ prompt ไม่ต้องพยายามสรุปเรื่อง 5 องก์ให้เหลือภาพเดียว
+  if (type === 'static_image') {
+    return {
+      system: sys,
+      user: 'สร้าง concept ภาพนิ่ง 1 ภาพสำหรับ PMV Universe จาก keyword ที่ให้มา — ไม่ต้องเขียนเรื่องเล่า ไม่ต้องมี SETUP/INCIDENT/STRUGGLE/RESOLUTION ' +
+        'ให้คิดตรงๆ ว่า "ภาพเดียว" ที่ดีที่สุดในการสื่อธีมนี้คือภาพอะไร แล้วบรรยายภาพนั้นให้ชัดพอจะเอาไปสร้างภาพได้จริง\n\n' +
+        'ประเภทประกัน: ' + insType + ' — ' + insDesc + '\n' +
+        '⚠️ หมายเหตุ: ห้ามระบุตัวเลข วงเงิน เปอร์เซ็นต์ หรือเงื่อนไขเฉพาะเจาะจง ให้พูดถึงประกันในเชิงแนวคิดกว้างๆ เท่านั้น\n\n' +
+        'ตัวละคร (ต้องทำตามนิสัย/ขอบเขตนี้เท่านั้น):\n' + charDesc + '\n\n' +
+        'Keyword/ธีม: ' + theme + '\nTone: ' + tone + '\nPlatform ปลายทาง: ' + plat + '\n\n' +
+        'กฎ: ภาพต้องมี ' + charNames + ' เป็นตัวเอกของภาพ และแสดงนิสัย/ขอบเขตที่กำหนดไว้ผ่านท่าทาง/สีหน้า/บริบทในภาพ\n\n' +
+        'ตอบตามรูปแบบนี้เท่านั้น ห้ามใช้ JSON ห้ามใช้เครื่องหมาย {} หรือ [] ใดๆ:\n\n' +
+        '===TITLE===\n(ชื่อภาพ/concept สั้นๆ บรรทัดเดียว)\n\n' +
+        '===HOOK===\n(ประโยคสั้นๆ อธิบายว่าภาพนี้สื่ออะไร บรรทัดเดียว)\n\n' +
+        '===INSURANCE_MESSAGE===\n(ข้อความประกันภัยที่ภาพนี้สื่อ 1 ประโยค — ไม่ระบุตัวเลข/เงื่อนไขเฉพาะเจาะจง)\n\n' +
+        '===IMAGE_CONCEPT===\n(อธิบาย concept ภาพเป็นภาษาไทย 2-3 ประโยค — ใครอยู่ในภาพ ทำอะไร อารมณ์แบบไหน บริบท/ฉากอะไร)\n\n' +
+        '===IMAGE_PROMPT===\n(visual prompt ภาษาอังกฤษสำหรับสร้างภาพจริง — ระบุ character lock, shot type, เลนส์, แสง, Thai RHD ถ้ามีรถ, Photorealistic, NO 3D)\n\n' +
+        '===END==='
+    };
+  }
+
   return {
     system: sys,
     user: 'เขียนเรื่องสั้นสำหรับ PMV Universe\n\n' +
@@ -2084,6 +2108,28 @@ function renderStory(data, type, theme, elapsed) {
       <div class="story-section-body" style="line-height:1.9;font-size:13px;white-space:pre-wrap">${data.full_story}</div>
     </div>`;
     window._seFullStory = data.full_story;
+  }
+
+  // Image concept + prompt (static_image content type)
+  if (data.image_concept || data.image_prompt) {
+    html += `<div class="story-section" style="border-color:rgba(201,149,43,0.25)">
+      <div class="story-section-header">
+        <span class="section-icon">🖼</span>
+        <span class="section-title">Image Concept</span>
+      </div>
+      <div class="story-section-body" style="line-height:1.9;font-size:13px;white-space:pre-wrap">${data.image_concept || ''}</div>
+    </div>`;
+    if (data.image_prompt) {
+      html += `<div class="story-section" style="border-color:rgba(201,149,43,0.25)">
+        <div class="story-section-header" style="display:flex;align-items:center;gap:6px">
+          <span class="section-icon">🎨</span>
+          <span class="section-title">Image Prompt (EN)</span>
+          <button onclick="copyText(window._seImagePrompt)" style="margin-left:auto;padding:4px 12px;background:rgba(201,149,43,.15);border:1px solid var(--gold);border-radius:5px;color:var(--gold2);font-size:9px;cursor:pointer;flex-shrink:0">📋 Copy</button>
+        </div>
+        <div class="story-section-body" style="line-height:1.7;font-size:11px;font-family:'Space Mono',monospace;white-space:pre-wrap;color:var(--teal2)">${data.image_prompt}</div>
+      </div>`;
+      window._seImagePrompt = data.image_prompt;
+    }
   }
 
   // Scenes (TikTok/Storyboard)
@@ -2412,11 +2458,15 @@ async function seGenerateStory() {
     const userPrompt = typeof promptObj === 'object' ? promptObj.user : promptObj;
     const systemPrompt = typeof promptObj === 'object' ? promptObj.system : 'ตอบเป็น JSON เท่านั้น';
 
+  // static_image ไม่ต้องเขียนเรื่องยาว — 500 tokens พอสำหรับ concept ภาพเดียว
+  // ประหยัด token และเร็วกว่า short_video (2000 tokens) มาก
+  const genMaxTokens = contentType === 'static_image' ? 500 : 2000;
+
   try {
     const t0 = Date.now();
     const response = await pmvClaudeFetch({
       model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 2000,
+      max_tokens: genMaxTokens,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     });
@@ -2435,8 +2485,11 @@ async function seGenerateStory() {
 
     // Parse delimiter-based response — ทนทานกว่า JSON.parse เพราะไม่สนใจ quote/newline ในเนื้อหา
     try {
-      var fieldNames = ['TITLE','HOOK','EMOTION_ARC','INSURANCE_MESSAGE','FULL_STORY'];
-      var fieldKeys = {TITLE:'title',HOOK:'hook',EMOTION_ARC:'emotion_arc',INSURANCE_MESSAGE:'insurance_message',FULL_STORY:'full_story'};
+      // static_image ใช้ field ชุดอื่น (ไม่มี EMOTION_ARC/FULL_STORY แต่มี IMAGE_CONCEPT/IMAGE_PROMPT)
+      var fieldNames = contentType === 'static_image'
+        ? ['TITLE','HOOK','INSURANCE_MESSAGE','IMAGE_CONCEPT','IMAGE_PROMPT']
+        : ['TITLE','HOOK','EMOTION_ARC','INSURANCE_MESSAGE','FULL_STORY'];
+      var fieldKeys = {TITLE:'title',HOOK:'hook',EMOTION_ARC:'emotion_arc',INSURANCE_MESSAGE:'insurance_message',FULL_STORY:'full_story',IMAGE_CONCEPT:'image_concept',IMAGE_PROMPT:'image_prompt'};
       parsed = {};
       for (var fi = 0; fi < fieldNames.length; fi++) {
         var fname = fieldNames[fi];
