@@ -1590,12 +1590,12 @@ async function pmvClaudeFetch(body) {
 // ══════ 🛡️ Insurance Types Manager ══════
 var INS_KEY = 'pmv_ins_v2';
 var INS_DEF = [
+  {id:'i6',emoji:'📦',name:'ประกันสินค้าขนส่ง',selling:'คุ้มครองสินค้าระหว่างขนส่ง เสียหาย สูญหาย',target:'ผู้ประกอบการขนส่ง',hashtags:'#ประกันสินค้า'},
   {id:'i1',emoji:'📋',name:'พ.ร.บ.',selling:'ภาคบังคับ คุ้มครองชีวิต/ร่างกาย ราคาถูกสุด ทุกคันต้องมี',target:'รถทุกคัน',hashtags:'#พรบ #ประกันภาคบังคับ'},
   {id:'i2',emoji:'⭐',name:'ชั้น 1',selling:'คุ้มครองครบ ทั้งรถเราและคู่กรณี ซ่อมศูนย์ ไฟไหม้ น้ำท่วม โจรกรรม',target:'รถใหม่ราคาสูง',hashtags:'#ชั้น1 #ประกันชั้น1'},
   {id:'i3',emoji:'✅',name:'ชั้น 2+',selling:'คุ้มครองรถชน รถหาย ราคาดี คุ้มค่า',target:'รถอายุ 3-7 ปี',hashtags:'#ชั้น2plus'},
   {id:'i4',emoji:'💚',name:'ชั้น 3+',selling:'คุ้มครองคู่กรณี ราคาประหยัด เหมาะรถกระบะ',target:'รถกระบะทั่วไป',hashtags:'#ชั้น3plus'},
   {id:'i5',emoji:'🚛',name:'ประกันรถกระบะ',selling:'ออกแบบสำหรับรถกระบะโดยเฉพาะ',target:'เจ้าของ Hilux Revo',hashtags:'#ประกันรถกระบะ #HiluxRevo'},
-  {id:'i6',emoji:'📦',name:'ประกันสินค้าขนส่ง',selling:'คุ้มครองสินค้าระหว่างขนส่ง เสียหาย สูญหาย',target:'ผู้ประกอบการขนส่ง',hashtags:'#ประกันสินค้า'},
 ];
 
 function insGet() {
