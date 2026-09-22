@@ -1542,11 +1542,11 @@ async function pmvClaudeFetch(body) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(60000)
+      signal: AbortSignal.timeout(90000)
     });
   } catch (e) {
     if (e.name === 'TimeoutError' || e.name === 'AbortError') {
-      throw new Error('เซิร์ฟเวอร์ตอบช้าเกินไป (60 วิ) — ถ้าไม่ได้ใช้งานมาสักพักเซิร์ฟเวอร์อาจกำลังเริ่มใหม่ (cold start) ลองอีกครั้งใน 1 นาที');
+      throw new Error('เซิร์ฟเวอร์ตอบช้าเกินไป (90 วิ) — ถ้าไม่ได้ใช้งานมาสักพักเซิร์ฟเวอร์อาจกำลังเริ่มใหม่ (cold start) ลองอีกครั้งใน 1 นาที');
     }
     throw new Error('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ (Failed to fetch) — เช็คอินเทอร์เน็ต แล้วลองใหม่');
   }
